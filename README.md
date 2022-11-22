@@ -3,9 +3,6 @@
 
 
 
-![Delairea_odorata](https://user-images.githubusercontent.com/117480692/203202780-44c5f8df-c7e5-431c-be97-3c353759e0cf.jpg)
-
-
 ### Introducción.
 
 En este proyecto se ha elaborado un sistema experto capaz de clasificar entre 12 plantas del género Senecio en Canarias. La información necesaria para esto viene de una clave dicotómica creada por expertos del sector para su correcta taxonomía.
