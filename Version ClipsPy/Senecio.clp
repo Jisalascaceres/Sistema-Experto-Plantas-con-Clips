@@ -31,7 +31,7 @@
 		(nombre "Senecio_angulatus")
 		(trepadora "si")
 		(flores_liguladas "si")
-		(hojas_forma "ovadas")
+		(hojas_forma "no")
 		(link "img/Senecio_angulatus.jpg")
 
 	)
@@ -40,7 +40,7 @@
  		(nombre "Senecio_tamoides")
 		(trepadora "si")
 		(flores_liguladas "si")
-		(hojas_forma "palmatifidas")
+		(hojas_forma "si")
 		(link "img/Senecio_tamoides.jpg")
 	)
 	(planta 
@@ -56,7 +56,7 @@
 		(trepadora "no")
 		(perenne "no")
 		(pelos_glandulares "si")
-		(link "img/Senecio_flavus.jpg")
+		(link "img/Senecio_viscosus.jpg")
 	)
 	(planta
 	(temp "no")
@@ -76,7 +76,7 @@
 	(pelos_glandulares "no")
 	(Pancholargo "no")
 	(tam_flor "no")
-	(tipo_hoja "pinnadas")
+	(tipo_hoja "si")
 	(link "img/Senecio_massaicus.jpg")
 	
 	
@@ -89,8 +89,8 @@
 	(pelos_glandulares "no")
 	(Pancholargo "no")
 	(tam_flor "no")
-	(tipo_hoja "basales")
-	(corimbos "diploide")
+	(tipo_hoja "no")
+	(corimbos "si")
 	(link "img/Senecio_vulgare.jpg")
 	
 	
@@ -103,8 +103,8 @@
 	(pelos_glandulares "no")
 	(Pancholargo "no")
 	(tam_flor "no")
-	(tipo_hoja "basales")
-	(corimbos "hexaploide")
+	(tipo_hoja "no")
+	(corimbos "no")
 	(link "img/Senecio_flavus.jpg")
 	
 	)
@@ -191,6 +191,7 @@
 	=>
 	(modify ?p(temp "no"))
 	(assert (path ?lb)) ; Declaramos el path para en el script de python tener el link a la imagen de la planta.
+	(assert(name ?nb)) ; Declaramos el nombre para en el script de python tener el nombre de la planta.
 	(printout t "El nombre de la planta es: " ?nb crlf)
 )
 

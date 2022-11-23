@@ -9,9 +9,9 @@ logging.basicConfig(level=10, format='%(message)s')
 env = clips.Environment()
 router = clips.LoggingRouter()
 env.add_router(router)
-env.load("Clips/planta2_NoPreguntas.clp")
+env.load("Taxonomia_Plantas/Senecio.clp")
 env.reset() 
-
+print('Bienvenido a la clave dicotómica del Genero Senecio, responda a las preguntas con las opciones que se le presentan para identificar la planta que desea.')
 
 #Vamos a definir un diccionario donde mas vamos a almacenar los facts de la planta en cuestion
 facts = {   'temp': None, 
@@ -35,15 +35,15 @@ facts = {   'temp': None,
 preguntas = {  
         1:"1. La planta es trepadora?:(si o no)",
         2:"2. Las flores son liguladas?:(si o no)",
-        3:"3. Las hojas son ovadas o palmatifidas?:(ovadas o palmatifidas)",
+        3:"3. Las lígulas son mayores de 15 mm?:(si o no)",
         4:"4. La planta es perenne?:(si o no)",
         5:"5. La planta tiene pelos glandulares?:(si o no)",
         6:"6. Las hojas son tan anchas como largas con flores flosculosas?: (si o no)",
         7:"7. Tiene flores liguladas mas grandes de 5x0.4 mm?:(si o no)",
-        8:"8. Las hojas son pinnadas o basales?:(pinnadas o basales)",
-        9: "9. Los corimbos son diploides o hexaploides?:(diploide o hexaploide)",
+        8:"8. Las hojas basales son pinnadas?(si o no)",
+        9: "9. Los Aquenios son menores de 3 mm?:(si o no)",
         10:"10. Las hojas inferiores estan estrechamente pinnadas?:(si o no)",
-        11:"11. Las hojas son anchas o estrechas?:(anchas o estrechas)",
+        11:"11. Las hojas inferiores son anchas o estrechas?:(anchas o estrechas)",
         12:"12. Las hojas superiores son pinnadas o enteras?:(pinnadas o enteras)"                              
 } 
 #Vamos a definir un diccionario que sirva como enlace entre el numero de la pregunta y el nombre del slot.
@@ -65,13 +65,24 @@ link={
 #Definimos las funciones
 
 #vamos a definir una funcion que resetee el diccionario facts y presente un mensaje de error para que el usuario vuelva a empezar.
-def reset_facts():
+def reset_facts(flag):
     for key in facts:
         facts[key] = None
-    print("Error por favor escriba solo las opciones dadas como respuesta, quiere volver a empezar?:(si o no)")
-    resp = input()
-    if resp != 'si': #Cualquier respuesta que no sea si, finaliza el programa.
-        exit()
+    if flag == 1:
+        print("Error por favor escriba solo las opciones dadas como respuesta, quiere volver a empezar?:(si o no)")
+        resp = input()
+        if resp != 'si': #Cualquier respuesta que no sea si, finaliza el programa.
+            exit()
+        else:
+            main()
+    else: 
+        print('Quiere volver a usar la aplicacion para identificar otra planta?: (si o no)')
+        if input() == 'si':
+            main()
+        else:
+            exit()
+              
+
         
 #Esta funcion escribe la pregunta del numero que le insertemos y la almacena en el diccionario facts.
 def ask_questions(key):
@@ -84,17 +95,22 @@ def fin():
     env.assert_string('(final si)')
     assert_planta()
     env.run()
-    show_image()
-    exit()
+    try:
+        show_image()
+    except:
+        print("No se ha encontrado ninguna imagen para esta planta, probablemente has intentando identificar de nuevo la misma planta.")
+    reset_facts(0)
     
 #Esta funcion recoge el link de la imagen de la planta en los facts y la muestra.
 
 def show_image():
     for fact in env.facts(): # Buscamos en la base de conocimiento el link de la imagen de la planta.
         if fact.template.name == 'path':
-            path = "Clips/"+ (fact[0])
+            path = "Taxonomia_Plantas/"+ (fact[0])
+        if fact.template.name == 'name': #buscamos tambien el nombre para ponerlo como nombre de la ventana creada.
+            name = (fact[0])
     image = cv2.imread(path)
-    cv2.imshow('Plantita', image)
+    cv2.imshow(name, image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     
@@ -122,7 +138,8 @@ def assert_planta():
 
 
 # Empezamos a preguntar desde el principio, cambiando las preguntas que van despues segun la respuesta acorde con el arbol de decision.
-while(True):
+def main():
+    
     ask_questions(1)
     if facts['trepadora'] == 'si':
         ask_questions(2)
@@ -147,13 +164,13 @@ while(True):
                     ask_questions(7)
                     if facts['tam_flor'] == 'no':
                         ask_questions(8)
-                        if facts['tipo_hoja'] == 'pinnadas':
+                        if facts['tipo_hoja'] == 'si':
                             fin()
-                        if facts['tipo_hoja'] == 'basales':
+                        if facts['tipo_hoja'] == 'no':
                             ask_questions(9)
-                            if facts['corimbos'] == 'diploide':
+                            if facts['corimbos'] == 'si':
                                 fin()
-                            if facts['corimbos'] == 'hexaploide':
+                            if facts['corimbos'] == 'no':
                                 fin()
                     if facts['tam_flor'] == 'si':
                         ask_questions(10)
@@ -163,6 +180,7 @@ while(True):
                         if facts['hojas_inferiores'] == 'si':
                             ask_questions(12)
                             fin()
-    reset_facts() #Si el usuario no ha escrito una respuesta correcta, se resetean los facts y se pregunta si quiere volver a empezar.
+    reset_facts(1)     #Si el usuario no ha escrito una respuesta correcta, se resetean los facts y se pregunta si quiere volver a empezar.
 
-
+if __name__ == '__main__':
+    main()
