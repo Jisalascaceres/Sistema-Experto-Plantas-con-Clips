@@ -10,7 +10,7 @@
 	; Hay dos tipos de reglas: Las de recopilar informacion, que corresponden a las preguntas que vamos haciendo en el arbol. 
 	; Y la regla END, que es la que comparará nustra planta Temp si con las de la base de datos y nos devolverá el nombre de la que coincide.
 	; Est�n definidos los niveles de salience representando el nivel del arbol en el que nos encontramos. 
-	; Esto, aunque pueda parecer innecesario, hace falta ya que al modificar un hecho, cuenta como un nuevo hecho completametne 
+	; Esto, aunque pueda parecer innecesario, hace falta ya que al modificar un hecho, cuenta como un nuevo hecho completamente
 
 ;-----------------------------------------
 
