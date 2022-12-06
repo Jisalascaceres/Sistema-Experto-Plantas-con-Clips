@@ -14,7 +14,7 @@ Para pasar esta clave al sistema experto se ha convertido dicha clave en un árb
  En el repositorio nos encontramos con 2 versiones del proyecto:
  
  + La primera es una versión hecha enteramente en Clips.
- + La segunda es una versión que utiliza a la vez Clips y Python. Aprovechando de Python su mayor comodidad para interacciones con el usuario y utilizando la biblioteca de ClipsPy para utilizar el motor de reglas de Clips en el entorno de Python.
+ + La segunda es una versión más completa que utiliza a la vez Clips y Python. Aprovechando de Python su mayor comodidad para interacciones con el usuario y utilizando la biblioteca de ClipsPy para utilizar el motor de reglas de Clips en el entorno de Python. Además, se han añadido algunas características como control de errores y que muestre una imagen de la planta es cuestión.
    
  
  #### Recursos utilizados:
